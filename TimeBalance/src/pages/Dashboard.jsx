@@ -76,8 +76,8 @@ function Dashboard() {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-800">Mi Dashboard</h1>
-        <p className="text-gray-600 mt-2">Vista general de tu semana</p>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Mi Dashboard</h1>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">Vista general de tu semana</p>
       </div>
 
       {/* Stats Cards */}
@@ -85,14 +85,14 @@ function Dashboard() {
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <div key={index} className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow">
+            <div key={index} className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow">
               <div className="flex items-center space-x-4">
                 <div className={`w-14 h-14 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center`}>
                   <Icon className="w-7 h-7 text-white" />
                 </div>
                 <div>
-                  <p className="text-3xl font-bold text-gray-800">{stat.value}</p>
-                  <p className="text-sm text-gray-600">{stat.label}</p>
+                  <p className="text-3xl font-bold text-gray-800 dark:text-white">{stat.value}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
                 </div>
               </div>
             </div>
@@ -105,8 +105,8 @@ function Dashboard() {
         {/* Left Column - Week Summary */}
         <div className="lg:col-span-2 space-y-6">
           {/* Week Summary */}
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Vista Rápida Semanal</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Vista Rápida Semanal</h2>
             <div className="flex justify-around items-end h-48">
               {weekSummary.map((day, index) => (
                 <div key={index} className="flex flex-col items-center space-y-2">
@@ -119,7 +119,7 @@ function Dashboard() {
                       ></div>
                     ))}
                   </div>
-                  <span className="text-xs font-medium text-gray-600">{day.day}</span>
+                  <span className="text-xs font-medium text-gray-600 dark:text-gray-400">{day.day}</span>
                 </div>
               ))}
             </div>
@@ -128,24 +128,24 @@ function Dashboard() {
 
         {/* Right Column - Alerts */}
         <div className="space-y-6">
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Alertas</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Alertas</h2>
             <div className="space-y-3">
               {alerts.map((alert, index) => {
                 const Icon = alert.icon;
-                const bgColor = alert.color === 'red' ? 'bg-red-50 border-red-200' : 
-                               alert.color === 'blue' ? 'bg-blue-50 border-blue-200' : 
-                               'bg-green-50 border-green-200';
-                const iconColor = alert.color === 'red' ? 'text-red-600' : 
-                                 alert.color === 'blue' ? 'text-blue-600' : 
-                                 'text-green-600';
+                const bgColor = alert.color === 'red' ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800' : 
+                               alert.color === 'blue' ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' : 
+                               'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800';
+                const iconColor = alert.color === 'red' ? 'text-red-600 dark:text-red-400' : 
+                                 alert.color === 'blue' ? 'text-blue-600 dark:text-blue-400' : 
+                                 'text-green-600 dark:text-green-400';
                 return (
                   <div key={index} className={`${bgColor} border-l-4 rounded-lg p-4`}>
                     <div className="flex items-start space-x-3">
                       <Icon className={`w-5 h-5 ${iconColor} mt-0.5`} />
                       <div>
-                        <h4 className="font-semibold text-sm text-gray-800">{alert.title}</h4>
-                        <p className="text-xs text-gray-600 mt-1">{alert.description}</p>
+                        <h4 className="font-semibold text-sm text-gray-800 dark:text-white">{alert.title}</h4>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{alert.description}</p>
                       </div>
                     </div>
                   </div>
@@ -157,16 +157,16 @@ function Dashboard() {
       </div>
 
       {/* Suggestions */}
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-xl font-bold text-gray-800 mb-6">💡 Sugerencias para Mejorar tu Balance</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6">
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">💡 Sugerencias para Mejorar tu Balance</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {suggestions.map((suggestion, index) => {
             const Icon = suggestion.icon;
             return (
-              <div key={index} className="border-2 border-gray-200 rounded-lg p-4 hover:border-indigo-500 transition-colors">
-                <Icon className="w-8 h-8 text-indigo-600 mb-3" />
-                <h4 className="font-semibold text-sm text-gray-800 mb-2">{suggestion.title}</h4>
-                <p className="text-xs text-gray-600 leading-relaxed">{suggestion.description}</p>
+              <div key={index} className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors">
+                <Icon className="w-8 h-8 text-indigo-600 dark:text-indigo-400 mb-3" />
+                <h4 className="font-semibold text-sm text-gray-800 dark:text-white mb-2">{suggestion.title}</h4>
+                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{suggestion.description}</p>
               </div>
             );
           })}
