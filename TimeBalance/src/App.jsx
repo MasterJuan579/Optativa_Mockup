@@ -1,29 +1,89 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './contexts/ThemeContext';
-import Navbar from './components/Navbar';
-import Dashboard from './pages/Dashboard';
-import Calendar from './pages/Calendar';
-import Analytics from './pages/Analytics';
-import Settings from './pages/Settings';
+import { useState, useCallback } from 'react'
+import LoadingScreen from './components/LoadingScreen'
+import Curtain from './components/Curtain'
+import PageTransition from './components/PageTransition'
+import Landing from './pages/Landing'
+import Actividad from './pages/Actividad'
+import { getActividadTitulo } from './data/actividades'
 
 function App() {
+  const [loadingComplete, setLoadingComplete] = useState(false)
+  const [curtainComplete, setCurtainComplete] = useState(false)
+  const [currentPage, setCurrentPage] = useState('landing')
+  const [nextPage, setNextPage] = useState(null)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  const handleLoadingFinish = () => {
+    setLoadingComplete(true)
+  }
+
+  const handleCurtainFinish = () => {
+    setCurtainComplete(true)
+  }
+
+  // Función para navegar con transición
+  const navigateTo = useCallback((page) => {
+    if (isTransitioning) return
+    setNextPage(page)
+    setIsTransitioning(true)
+  }, [isTransitioning])
+
+  // Cambia la página mientras la cortina cubre
+  const handlePageChange = useCallback(() => {
+    setCurrentPage(nextPage)
+  }, [nextPage])
+
+  // Cuando la transición termina completamente
+  const handleTransitionComplete = useCallback(() => {
+    setNextPage(null)
+    setIsTransitioning(false)
+  }, [])
+
+  const handleStart = () => {
+    navigateTo(1)
+  }
+
+  const handleNavigate = (actividadId) => {
+    navigateTo(actividadId)
+  }
+
+  const handleHome = () => {
+    navigateTo('landing')
+  }
+
   return (
-    <ThemeProvider>
-      <Router>
-        <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300">
-          <Navbar />
-          <main className="container mx-auto px-4 py-8">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/settings" element={<Settings />} />
-            </Routes>
-          </main>
-        </div>
-      </Router>
-    </ThemeProvider>
-  );
+    <>
+      {/* Loading Screen */}
+      {!loadingComplete && <LoadingScreen onFinish={handleLoadingFinish} />}
+      
+      {/* Curtain inicial */}
+      {loadingComplete && !curtainComplete && (
+        <Curtain onFinish={handleCurtainFinish} />
+      )}
+
+      {/* Transición entre páginas */}
+      <PageTransition 
+        isActive={isTransitioning} 
+        onPageChange={handlePageChange}
+        onComplete={handleTransitionComplete}
+        title={getActividadTitulo(nextPage)}
+      />
+      
+      {/* Landing */}
+      {loadingComplete && currentPage === 'landing' && (
+        <Landing onStart={handleStart} />
+      )}
+
+      {/* Actividades */}
+      {loadingComplete && typeof currentPage === 'number' && (
+        <Actividad 
+          id={currentPage} 
+          onNavigate={handleNavigate}
+          onHome={handleHome}
+        />
+      )}
+    </>
+  )
 }
 
-export default App;
+export default App

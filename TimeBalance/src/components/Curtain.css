@@ -1,0 +1,37 @@
+.curtain-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 9998;
+  pointer-events: none;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background-color: #000000;
+  transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 9999;
+}
+
+.curtain.left {
+  left: 0;
+  transform: translateX(0%);
+}
+
+.curtain.right {
+  right: 0;
+  transform: translateX(0%);
+}
+
+.curtain.left.open {
+  transform: translateX(-100%);
+}
+
+.curtain.right.open {
+  transform: translateX(100%);
+}
