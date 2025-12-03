@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { Play } from 'lucide-react'
+import Ballpit from '../components/Ballpit'
 
 const Landing = ({ onStart }) => {
   const [transform, setTransform] = useState('')
@@ -26,18 +27,21 @@ const Landing = ({ onStart }) => {
 
   return (
     <div className="min-h-screen bg-dark-blue relative overflow-hidden flex flex-col items-center justify-center">
-      {/* Líneas de cuaderno */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-full h-px bg-white/5"
-            style={{ top: `${(i + 1) * 5}%` }}
-          />
-        ))}
-        {/* Línea roja de margen */}
-        <div className="absolute left-[10%] top-0 bottom-0 w-px bg-red-500/20" />
+      
+      {/* Ballpit como fondo */}
+      <div className="absolute inset-0 z-0">
+        <Ballpit
+          count={100}
+          gravity={0.01}
+          friction={0.9975}
+          wallBounce={0.95}
+          followCursor={false}
+          colors={[0x3b82f6, 0x8b5cf6, 0xf59e0b]}
+        />
       </div>
+
+      {/* Líneas de cuaderno */}
+
 
       {/* Contenido principal */}
       <div
@@ -92,10 +96,10 @@ const Landing = ({ onStart }) => {
       </div>
 
       {/* Decoración de esquinas */}
-      <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-white/10" />
-      <div className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-white/10" />
-      <div className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-white/10" />
-      <div className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-white/10" />
+      <div className="absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-white/10 z-10" />
+      <div className="absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-white/10 z-10" />
+      <div className="absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-white/10 z-10" />
+      <div className="absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-white/10 z-10" />
     </div>
   )
 }
